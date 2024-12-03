@@ -2,7 +2,9 @@
 An automated GWAS analysis toolkit.
 
 
-1. Installation
+# 1.Installation
+====================
+
    
 1.1 Install Miniconda
 As this workflow is based on the workflow management system snakemake and conda. We strongly recommend installing miniconda3 with python3. For specific installation methods and usage methods of GWASpipe, please refer to the GWASpipe_Documentation.pdf.
@@ -10,17 +12,28 @@ As this workflow is based on the workflow management system snakemake and conda.
 1.2 Install GWASpipe
 Clone the repository:
 
-`git clone https://github.com/LRF123lrf/GWASpipe.git`
+```bash
+git clone https://github.com/LRF123lrf/GWASpipe.git
+```
+
+
+
 
 Create the environment:
 
-`conda env create -n GWASpipe -f envs/envs.yaml`
+```bash
+conda env create -n GWASpipe -f envs/envs.yaml
+```
 
 Activate the environment:
 
-`conda activate GWASpipe`
+```bash
+conda activate GWASpipe
+```
 
-2. Prepare input files
+# 2.Prepare input files
+====================
+
 Several input files are required in order to run the workflow, a genome file (.fa), an  phenotype file (.csv) and compressed sequencing files (.fastq.gz)
 
 | File type    | Description                                                         |
@@ -60,7 +73,10 @@ Customize the workflow based on your need in configs/config.yaml .It contains th
 - **ANNOTATION**: The path of annotation files
 
 
+# 3. Run RNApipe
+====================
 
-3. Run RNApipe
    
-`python main.py`
+```bash
+sh snakemake.sh
+```
