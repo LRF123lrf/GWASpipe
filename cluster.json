@@ -1,0 +1,29 @@
+{
+    "__default__" :
+    {
+        "queue"     : "normal",
+        "nCPUs"     : "2",
+        "memory"    : 10000,
+        "resources" : "\"rusage[mem=10000]\"",
+        "name"      : "JOBNAME.{rule}.{wildcards}",
+        "output"    : "logs/cluster/{rule}.{wildcards}.out",
+        "error"     : "logs/cluster/{rule}.{wildcards}.err"
+    },
+
+    "bwa_map" :
+    {
+        "queue"     : "high",
+        "nCPUs"     : "6",
+        "memory"    : 30000,
+        "resources" : "\"rusage[mem=30000]\""
+    },
+
+    "genotype_imputation" :
+    {
+        "queue"     : "high",
+        "nCPUs"     : "6",
+        "memory"    : 30000,
+        "resources" : "\"rusage[mem=30000]\""
+    }
+}
+
