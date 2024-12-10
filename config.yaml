@@ -1,3 +1,43 @@
+PROJECT： #项目名称;
+SPEICES_ABBREVIATION： #物种简称，在speices_abbreviations中查询;
+RAWDATA： #测序文件.fq.gz的路径；
+REF： #参考基因组文件路径；
+PFX： #参考基因组名称；
+CHROMOSOMES： #染色体数目；
+GENOME： #[0,1]选择参考基因组是否需要切割（默认为0表示不需要）；
+PHENOTYPEPATH： #表型数据文件路径；
+MLM： #GWAS模型选择[E：EMMAX;G：GEMMA]；
+END： #测序数据类型是SE（single-end）还是PE（paired-end）；
+OUTPUTPATH： #输出文件的路径；
+ANNOTATION： #注释文件路径；
+TRIM：TrimGalore/0.6.6 #［TrimGalore/0.6.6,fastp］选择工具执行数据预处理；
+THREAD："10" # 线程数目；
+QUEUE： #提交的作业队列；
+NCPUS： #分配到每个作业的核心数；
+MEMORY： #分配到每个作业的内存大小；
+RERUN-INCOMPLETE： #作业中断后，断点续跑。
+
+
+
+###示例###
+#REF: "ref/AGIS-1.0.fasta"
+#PFX: "AGIS-1.0"
+#RAWDATA: "data"
+#CHROMOSOMES：
+#chromosomes:
+#  - Chr01
+#  - Chr02
+#  - Chr03
+#  - Chr04
+#  - Chr05
+#  - Chr06
+#  - Chr07
+#  - Chr08
+#  - Chr09
+#  - Chr10
+#  - Chr11
+#  - Chr12
+
 chromosomes:
   - Chr01
   - Chr02

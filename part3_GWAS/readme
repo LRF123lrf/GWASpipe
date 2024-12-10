@@ -1,0 +1,19 @@
+一、phenotype.R
+phenotype.R脚本是用来处理表型格式的脚本，整理单个表型数据为三列：FID  IID  pheno-data
+EMMAX模型一次只能输入一个表型文件
+
+
+二、emmax-cov-txt.R
+emmax-cov-txt.R脚本是用来处理协变量文件格式的脚本，整理协变量文件格式为：FID  IID  截距1  PC1 PC2 PC3...PCn
+（需要用到emmax_in.tfam文件）
+
+
+三、kinf.sh
+kinf.sh脚本用于转化基因型文件为EMMAX格式（可以得到.tfam文件），并进行群体亲缘关系分析。
+
+
+四、script.R
+生成各表型进行全基因组关联分析的脚本。
+
+五、emmax-gwas.sh
+示例一个表型进行全基因组关联分析的脚本。

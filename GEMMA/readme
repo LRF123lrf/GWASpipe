@@ -1,0 +1,28 @@
+#input目录中存放vcf文件和表型文件。
+#调用vcf2gwas工具来使用GEMMA模型进行GWAS分析。
+
+It is a good practice to install the package in a clean environment.
+So first create a new environment (you can name it as you like), here with the exemplary name 'myenv':
+conda create -n myenv
+
+Next, activate the environment by typing:
+conda activate myenv
+
+Now, the vcf2gwas package can be installed:
+conda install vcf2gwas -c conda-forge -c bioconda -c fvogt257 
+
+Everything is ready for analysis now.
+Optionally, to test the installation and copy the example files to your current working directory, run:
+vcf2gwas -v test
+
+Once the analysis is completed, the environment can be deactivated:
+conda deactivate
+
+
+To download the vcf2gwas docker image, run the following command:
+docker pull fvogt257/vcf2gwas
+
+Everything is ready for analysis now.
+Optionally, to test the image and copy the example files to your current working directory, run:
+docker run -v /path/to/current-working-directory/:/vcf2gwas/ fvogt257/vcf2gwas -v test
+

@@ -3,9 +3,11 @@ configfile: "config.yaml"
 
 # 获取参考基因组和染色体列表
 CHROMOSOMES = config["chromosomes"]
-REF = config['REF']
-PFX = config['PFX']
-RAWDATA = config['RAWDATA']
+
+# 定义其他变量
+REF = "ref/AGIS-1.0.fasta"
+PFX = "AGIS-1.0"
+RAWDATA = "data"
 
 (SAMPLES, READS) = glob_wildcards(RAWDATA + "/{sample}_{read}.fq.gz")
 SAMPLES = sorted(set(SAMPLES))  # 去重并排序
@@ -25,9 +27,18 @@ rule all:
         "result/03.snp/snp.vcf.gz",  # 只保留snp变异的文件
         "result/04.anno/anno.vcf.gz", #硬过滤、-q 0.1:major过滤、分染色体填充注释得到的文件
         "result/04.anno/SNP.vcf", #过滤--maf 0.05 --geno 0.2
+        "input/SNP.vcf",
         "result/05.plink/ld.prune.in.bed",
         "result/05.plink/ld.prune.in.bim",
-        "result/05.plink/ld.prune.in.fam"
+        "result/05.plink/ld.prune.in.fam",
+        "result/06.pca/pca.bed",
+        "result/06.pca/pca.bim",
+        "result/06.pca/pca.fam",
+        "result/06.pca/pca_output.eigenval",
+        "result/06.pca/pca_output.eigenvec",
+        "result/06.pca/pca_output.log",
+        "result/06.pca/pca_output.nosex"
+
 
 rule fastp:
     input:
@@ -394,3 +405,54 @@ rule admixture:
         /public/home/rfluo/01.software/admixture --cv {input.bed} {wildcards.K} | tee {output}
         mv ld* result/05.plink/logs/
         """
+
+
+rule input_vcf:
+    input:
+        "result/04.anno/SNP.vcf"
+    output:
+        "input/SNP.vcf"
+    log:
+        "logs/input_vcf.log"
+    shell:
+        """
+        ln -s ../{input} {output} > {log} 2>&1
+        """
+
+
+# 第一步：SNP.vcf文件转化格式
+rule pca:
+    input:
+        "result/04.anno/SNP.vcf"
+    output:
+        bed="result/06.pca/pca.bed",
+        bim="result/06.pca/pca.bim",
+        fam="result/06.pca/pca.fam"
+    log:
+        "logs/pca.log"
+    shell:
+        """
+        module load plink/1.9
+        plink --vcf {input} --make-bed --out result/06.pca/pca > {log} 2>&1
+        """
+
+
+# 第二步：主成分分析
+rule pca_analysis:
+    input:
+        bed="result/06.pca/pca.bed",
+        bim="result/06.pca/pca.bim",
+        fam="result/06.pca/pca.fam"
+    output:
+        eigenval="result/06.pca/pca_output.eigenval",
+        eigenvec="result/06.pca/pca_output.eigenvec",
+        log="result/06.pca/pca_output.log",
+        nosex="result/06.pca/pca_output.nosex"
+    log:
+        "logs/pca_analysis.log"
+    shell:
+        """
+        module load plink/1.9
+        plink --bfile result/06.pca/pca --pca 30 --out result/06.pca/pca_output > {log} 2>&1
+        """
+
